@@ -8,6 +8,8 @@
 [![Tests](https://img.shields.io/badge/tests-80%20passing-brightgreen)](.)
 [![Rust](https://img.shields.io/badge/rust-1.70+-orange.svg)](https://www.rust-lang.org)
 [![Python](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org)
+[![PyPI](https://img.shields.io/pypi/v/veil-solana.svg)](https://pypi.org/project/veil-solana/)
+[![Docs](https://img.shields.io/badge/docs-veil--sdk.com-informational)](https://veil-sdk.com)
 
 Veil provides **production-ready privacy primitives** for Solana applications. Built with a **Python-first API** powered by **high-performance Rust cryptography**, Veil makes zero-knowledge proofs and private transactions accessible to Python developers without sacrificing performance.
 

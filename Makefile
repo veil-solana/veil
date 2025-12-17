@@ -114,12 +114,12 @@ publish:
 	echo; \
 	if [[ $$REPLY =~ ^[Yy]$$ ]]; then \
 		echo "Building and publishing..."; \
-		maturin publish; \
+		maturin publish --interpreter python3.10 python3.11 python3.12; \
 		echo ""; \
 		echo "✓ Published to PyPI!"; \
 		echo ""; \
 		echo "Next steps:"; \
-		echo "  1. Create GitHub release: https://github.com/veil-sdk/veil/releases/new"; \
+		echo "  1. Create GitHub release: https://github.com/veil-solana/veil/releases/new"; \
 		echo "  2. Push tags: git push --tags"; \
 		echo "  3. Announce release"; \
 		echo "  4. Verify: pip install veil-solana"; \
