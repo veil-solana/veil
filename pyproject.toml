@@ -4,17 +4,16 @@ build-backend = "maturin"
 
 [project]
 name = "veil-solana"
-version = "0.1.4"
+version = "0.1.0"
 description = "Privacy SDK for Solana with zkSNARK-powered transactions - Python interface with Rust cryptographic backbone"
 readme = "README.md"
 requires-python = ">=3.12"
 license = {text = "MIT"}
 keywords = ["solana", "privacy", "zksnark", "zero-knowledge", "defi", "sdk"]
 authors = [
-    {name = "Veil Team", email = "dev@veil-sdk.network"}
+    {name = "Veil Team", email = "dev@veil-sdk.com"}
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3.12",
@@ -44,7 +43,7 @@ dev = [
 
 [project.urls]
 Homepage = "https://github.com/veil-solana/veil"
-Documentation = "https://docs.veil.network"
+Documentation = "https://veil-sdk.com/docs/getting-started/overview"
 Repository = "https://github.com/veil-solana/veil"
 Issues = "https://github.com/veil-solana/veil/issues"
 

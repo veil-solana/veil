@@ -1,5 +1,7 @@
 # Veil
 
+[**veil-sdk.com**](https://veil-sdk.com)
+
 > Privacy SDK infrastructure for Solana - Python interface with Rust cryptographic backbone
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -52,7 +54,7 @@ Enable **private transactions** on Solana using **Groth16 zkSNARKs**. Shield you
 pip install veil-solana
 
 # Or install from source
-git clone https://github.com/veil-sdk/veil
+git clone https://github.com/veil-solana/veil
 cd veil
 pip install -e ".[dev]"
 ```
@@ -68,7 +70,7 @@ from solders.keypair import Keypair
 
 # Initialize client
 client = PrivacyClient(
-    rpc_url="https://api.devnet.solana.com",
+    rpc_url="https://api.mainnet-beta.solana.com",
     program_id="Vei1111111111111111111111111111111111111111"  # Optional
 )
 
@@ -302,7 +304,7 @@ Circuit size: **~7,000 R1CS constraints**
 
 ```bash
 # Clone repository
-git clone https://github.com/veil-sdk/veil
+git clone https://github.com/veil-solana/veil
 cd veil
 
 # Build Rust core
