@@ -1,0 +1,31 @@
+[package]
+name = "veil-program"
+version = "0.1.0"
+edition = "2021"
+description = "Veil on-chain privacy program for Solana"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "veil_program"
+
+[features]
+no-entrypoint = []
+cpi = ["no-entrypoint"]
+
+[dependencies]
+# Workspace dependencies
+solana-program = { workspace = true }
+anchor-lang = { workspace = true }
+anchor-spl = { workspace = true }
+
+serde = { workspace = true }
+thiserror = { workspace = true }
+bs58 = { workspace = true }
+
+# Groth16 on-chain verification
+groth16-solana = "0.2"
+
+[dev-dependencies]
+solana-program-test = "1.17"
+solana-sdk = "1.17"
+tokio = { version = "1.0", features = ["full"] }

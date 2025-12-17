@@ -1,0 +1,47 @@
+[workspace]
+members = [
+    "crates/core",
+    "crates/program"
+]
+resolver = "2"
+
+[workspace.dependencies]
+# Cryptography - zkSNARK and elliptic curves
+ark-bn254 = "0.4"
+ark-groth16 = "0.4"
+ark-crypto-primitives = "0.4"
+ark-std = { version = "0.4", default-features = false }
+ark-ff = "0.4"
+ark-ec = "0.4"
+ark-serialize = "0.4"
+ark-relations = "0.4"
+ark-r1cs-std = "0.4"
+ark-snark = "0.4"
+
+# Solana
+solana-program = "1.17"
+anchor-lang = "0.29"
+anchor-spl = "0.29"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Hashing
+sha2 = "0.10"
+blake3 = "1.5"
+
+# Utilities
+hex = "0.4"
+rand = "0.8"
+bs58 = "0.5"
+
+# Python bindings
+pyo3 = { version = "0.20", features = ["extension-module"] }
+
+# Testing
+criterion = "0.5"
