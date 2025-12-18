@@ -106,7 +106,17 @@ shield_tx = asyncio.run(main())
 > # Returns commitment data without submitting transaction
 > ```
 
-**Note:** SPL token shielding currently requires manual token account setup. Use the Solana CLI or a wallet to create associated token accounts before shielding SPL tokens.
+**SPL Token Support (v0.1.1+):** Shield any SPL token by passing the mint address:
+```python
+# Shield USDC (automatic token account creation)
+shield_tx = await client.shield_assets_async(
+    amount=1_000_000,  # 1 USDC (6 decimals)
+    token="EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",  # USDC mint
+    keypair=payer,
+    secret=secret
+)
+# The SDK automatically creates token accounts as needed!
+```
 
 #### 2. Private Transfer
 
@@ -168,6 +178,20 @@ unshield_tx = asyncio.run(main())
 ```
 
 > **Offline mode**: `client.unshield_assets(amount, destination, owner_secret, commitment)`
+
+**SPL Token Unshield (v0.1.1+):**
+```python
+# Unshield SPL tokens (e.g., USDC)
+unshield_tx = await client.unshield_assets_async(
+    amount=1_000_000,  # 1 USDC
+    destination=destination,
+    owner_keypair=payer,
+    owner_secret=secret,
+    commitment=shield_tx.commitment,
+    token="EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"  # USDC mint
+)
+# The SDK automatically creates recipient's token account if needed!
+```
 
 #### 4. Using Relayers (Coming Soon)
 

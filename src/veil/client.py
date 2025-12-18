@@ -243,6 +243,7 @@ class PrivacyClient:
         owner_keypair: Keypair,
         owner_secret: str,
         commitment: str,
+        token: str = "SOL",
     ) -> PrivateTransaction:
         """
         Unshield assets to make them public (submits to blockchain)
@@ -253,6 +254,7 @@ class PrivacyClient:
             owner_keypair: Owner's keypair for signing
             owner_secret: Owner's secret key
             commitment: Commitment hex to unshield
+            token: Token mint address ("SOL" for native SOL)
 
         Returns:
             Transaction result
@@ -291,6 +293,7 @@ class PrivacyClient:
             amount=amount,
             proof=proof,
             payer_keypair=bytes(owner_keypair),
+            token=token,
         )
 
         return PrivateTransaction(

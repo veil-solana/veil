@@ -906,7 +906,7 @@ wheels = [
 
 [[package]]
 name = "veil-solana"
-version = "0.1.2"
+version = "0.1.1"
 source = { editable = "." }
 dependencies = [
     { name = "anchorpy" },

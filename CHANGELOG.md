@@ -5,6 +5,48 @@ All notable changes to Veil will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1] - 2025-12-19
+
+### Added
+
+- **Full SPL Token Support** - Seamlessly shield, transfer, and unshield any SPL token
+  - Automatic Associated Token Account (ATA) creation for users and pool vaults
+  - Same intuitive API as SOL - just pass the token mint address
+  - No manual token account setup required
+  - Support for USDC, USDT, and any SPL token standard
+- **Asset Registry** module for managing multi-asset privacy pools
+  - Deterministic asset ID generation from mint addresses
+  - Common token symbol shortcuts (USDC, USDT)
+- **Token Utilities** module with ATA management helpers
+- **SPL Token Example Script** (`examples/spl_privacy.py`)
+- **Integration Tests** for SPL token privacy operations
+
+### Changed
+
+- Updated `SolanaClient.submit_shield_transaction()` to automatically handle SPL tokens
+- Updated `SolanaClient.submit_unshield_transaction()` with optional `token` parameter
+- Updated `PrivacyClient.unshield_assets_async()` to support SPL token parameter
+- Enhanced README with SPL token examples and usage
+
+### Removed
+
+- `NotImplementedError` for SPL token shielding (now fully supported!)
+
+### Technical Details
+
+**New Files:**
+- `src/veil/token_utils.py` - Token account management utilities
+- `src/veil/assets.py` - Asset registry and ID management
+- `examples/spl_privacy.py` - Complete SPL token privacy demo
+- `tests/integration/test_spl_tokens.py` - SPL token test suite
+
+**Modified Files:**
+- `src/veil/solana_client.py` - SPL token integration with automatic ATA creation
+- `src/veil/client.py` - Token parameter support in unshield operations
+- `README.md` - SPL token examples and documentation
+
+---
+
 ## [0.1.0] - 2025-12-16
 
 **Veil's first release** - A privacy SDK for Solana with zkSNARK-powered transactions.

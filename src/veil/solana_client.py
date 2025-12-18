@@ -21,6 +21,8 @@ from solders.hash import Hash
 from solders.system_program import ID as SYSTEM_PROGRAM_ID
 from spl.token.constants import TOKEN_PROGRAM_ID
 
+from .token_utils import get_or_create_ata, get_associated_token_address
+
 # Program ID - replace with actual deployed program ID
 DEFAULT_PROGRAM_ID = "Nyx1111111111111111111111111111111111111111"
 
@@ -391,13 +393,33 @@ class SolanaClient:
         payer = Keypair.from_bytes(payer_keypair)
 
         if token.upper() == "SOL":
+            # Native SOL shielding
             instruction = self.instruction_builder.shield_sol(
                 payer.pubkey(), commitment, amount
             )
         else:
-            raise NotImplementedError(
-                "SPL token shield requires token account setup. "
-                "Use shield_spl() with explicit token accounts."
+            # SPL token shielding with automatic ATA management
+            mint = Pubkey.from_string(token)
+
+            # Get or create user's associated token account
+            user_ata = await get_or_create_ata(
+                self.client, payer.pubkey(), mint, payer
+            )
+
+            # Get vault authority PDA
+            vault_authority, _ = find_vault_pda(self.program_id, self.pool_pda)
+
+            # Get or create vault's associated token account
+            vault_ata = await get_or_create_ata(
+                self.client, vault_authority, mint, payer
+            )
+
+            instruction = self.instruction_builder.shield_spl(
+                payer.pubkey(),
+                user_ata,
+                vault_ata,
+                commitment,
+                amount,
             )
 
         return await self.send_transaction(instruction, payer)
@@ -436,6 +458,7 @@ class SolanaClient:
         amount: int,
         proof: bytes,
         payer_keypair: bytes,
+        token: str = "SOL",
     ) -> str:
         """
         Submit unshield transaction
@@ -446,6 +469,7 @@ class SolanaClient:
             amount: Amount to unshield
             proof: Proof bytes (96 bytes for MVP)
             payer_keypair: Payer's keypair bytes (64 bytes)
+            token: Token mint address ("SOL" for native SOL)
 
         Returns:
             Transaction signature
@@ -453,9 +477,34 @@ class SolanaClient:
         payer = Keypair.from_bytes(payer_keypair)
         recipient = Pubkey.from_string(destination)
 
-        instruction = self.instruction_builder.unshield_sol(
-            payer.pubkey(), recipient, nullifier, amount, proof
-        )
+        if token.upper() == "SOL":
+            # Native SOL unshielding
+            instruction = self.instruction_builder.unshield_sol(
+                payer.pubkey(), recipient, nullifier, amount, proof
+            )
+        else:
+            # SPL token unshielding with automatic ATA management
+            mint = Pubkey.from_string(token)
+
+            # Get vault authority PDA
+            vault_authority, _ = find_vault_pda(self.program_id, self.pool_pda)
+
+            # Get vault's token account (should already exist from shield)
+            vault_ata = await get_associated_token_address(vault_authority, mint)
+
+            # Get or create recipient's token account
+            recipient_ata = await get_or_create_ata(
+                self.client, recipient, mint, payer
+            )
+
+            instruction = self.instruction_builder.unshield_spl(
+                payer.pubkey(),
+                recipient_ata,
+                vault_ata,
+                nullifier,
+                amount,
+                proof,
+            )
 
         return await self.send_transaction(instruction, payer)
 
